@@ -1,5 +1,6 @@
+"use client"
 import Image from "next/image";
-
+import {motion} from 'framer-motion'
 export interface AnimeProp {
   id: string;
   name: string;
@@ -16,13 +17,21 @@ interface Prop {
   anime: AnimeProp;
   index: number;
 }
+const varients={
+  hidden:{opacity:0},
+  visible:{opacity:1}
+}
+function AnimeCard({ anime,index }: Prop) {
 
-function AnimeCard({ anime }: Prop) {
   return (
-    <div className="max-w-sm rounded relative w-full">
+    <motion.div viewport={{amount:0}} initial="hidden" animate="visible" transition={{
+      delay: index * 0.09,
+      ease:'easeInOut',
+      duration:0.5
+    }} variants={varients} className="max-w-sm rounded relative w-full">
       <div className="relative w-full h-[37vh]">
         <Image
-          src={anime.image.original}
+          src={`https://shikimori.one${anime.image.original}`}
           alt={anime.name}
           fill
           className="rounded-xl"
@@ -64,7 +73,7 @@ function AnimeCard({ anime }: Prop) {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
